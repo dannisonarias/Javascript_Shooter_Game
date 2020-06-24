@@ -2,33 +2,23 @@
 import { Scene } from 'phaser';
 
 class StartMenu extends Scene {
+    constructor(){
+        super('StartMenu')
+    }
 preload ()
     {
-        this.load.setBaseURL('http://labs.phaser.io');
-
-        this.load.image('sky', 'assets/skies/space3.png');
-        this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-        this.load.image('red', 'assets/particles/red.png');
+        this.load.setBaseURL('./assets/');
+        this.load.audio('spaceMenu', 'sounds/spaceMenu.mp3');
+        this.load.image('background', 'images/startMenu.jpg');
+        this.load.image('play', 'images/Play.png')
     }
     create()
     {
-        this.add.image(400, 300, 'sky');
-
-        var particles = this.add.particles('red');
-
-        var emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
-
-        var logo = this.physics.add.image(400, 100, 'logo');
-
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
-
-        emitter.startFollow(logo);
+        this.add.image(400, 300, 'background');
+        this.add.image(400, 300,'play');
+        let sfx = this.sound.add('spaceMenu')
+        sfx.play();
+        this.input.on('pointerdown',()=> this.scene.start('StartGame'))
     }
 }
 

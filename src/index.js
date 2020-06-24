@@ -1,5 +1,6 @@
 import "phaser";
-import StartMenu from './StartMenu'
+import startMenu from './StartMenu'
+import startGame from './StartGame'
 
 const config = {
   title: "Starfall",
@@ -7,7 +8,7 @@ const config = {
   height: 600,
   parent: "game",
   backgroundColor: "#18216D",
-  scene:StartMenu
+  scene:[startMenu,startGame]
 };
 
 window.onload = () => {
