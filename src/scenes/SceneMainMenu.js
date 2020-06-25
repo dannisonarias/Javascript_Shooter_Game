@@ -8,14 +8,14 @@ class SceneMainMenu extends Phaser.Scene {
 
   preload() {
     this.load.setBaseURL("./assets/");
-    this.load.image("sprBg0", "layers/image5.jpg");
-    this.load.image("sprBg1", "content/sprBg0.png");
-    this.load.image("sprBtnPlay", "content/sprBtnPlay.png");
-    this.load.image("sprBtnPlayHover", "content/sprBtnPlayHover.png");
-    this.load.image("sprBtnPlayDown", "content/sprBtnPlayDown.png");
-    this.load.image("sprBtnRestart", "content/sprBtnRestart.png");
-    this.load.image("sprBtnRestartHover", "content/sprBtnRestartHover.png");
-    this.load.image("sprBtnRestartDown", "content/sprBtnRestartDown.png");
+    this.load.image("sprBg0", "content/sprBg0.png");
+    this.load.image("sprBg1", "content/sprBg1.png");
+    this.load.image("sprBtnPlay", "content/play_buttons.png");
+    this.load.image("sprBtnPlayHover", "content/play_button_pressed.png");
+    this.load.image("sprBtnPlayDown", "content/play_button_pressed.png");
+    this.load.image("sprBtnRestart", "content/exit_buttons.png");
+    this.load.image("sprBtnRestartHover", "content/exit_buttons_pressed.png");
+    this.load.image("sprBtnRestartDown", "content/exit_buttons_pressed.png");
     this.load.audio("sndBtnOver", "content/sndBtnOver.wav");
     this.load.audio("sndBtnDown", "content/sndBtnDown.wav");
   }
@@ -68,7 +68,7 @@ class SceneMainMenu extends Phaser.Scene {
     this.title = this.add.text(
       this.game.config.width * 0.5,
       128,
-      "SPACE SHOOTER",
+      "ALIEN INVASION",
       {
         fontFamily: "monospace",
         fontSize: 48,

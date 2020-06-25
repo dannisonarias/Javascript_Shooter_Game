@@ -15,15 +15,10 @@ class SceneMain extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-    this.load.spritesheet("sprEnemy0", "assets/content/sprEnemy0.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-    });
+    this.load.image("sprEnemy0", "assets/content/sprEnemy0.png");
     this.load.image("sprEnemy1", "assets/content/sprEnemy1.png");
-    this.load.spritesheet("sprEnemy2", "assets/content/sprEnemy2.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-    });
+    this.load.image("sprEnemy2", "assets/content/sprEnemy2.png");
+
     this.load.image("sprLaserEnemy0", "assets/content/sprLaserEnemy0.png");
     this.load.image("sprLaserPlayer", "assets/images/bullet.png");
     this.load.image("ship1", "assets/images/1.png");
@@ -38,18 +33,6 @@ class SceneMain extends Phaser.Scene {
   }
 
   create() {
-    this.anims.create({
-      key: "sprEnemy0",
-      frames: this.anims.generateFrameNumbers("sprEnemy0"),
-      frameRate: 20,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: "sprEnemy2",
-      frames: this.anims.generateFrameNumbers("sprEnemy2"),
-      frameRate: 20,
-      repeat: -1,
-    });
     this.anims.create({
       key: "sprExplosion",
       frames: this.anims.generateFrameNumbers("sprExplosion"),
@@ -79,13 +62,15 @@ class SceneMain extends Phaser.Scene {
       ],
       laser: this.sound.add("sndLaser"),
     };
-
+    // create scrolling background
     this.backgrounds = [];
     for (var i = 0; i < 5; i++) {
       var bg = new ScrollingBackground(this, "sprBg0", i * 10);
       this.backgrounds.push(bg);
     }
+    // end
 
+    // create player sprite
     this.player = new Player(
       this,
       this.game.config.width * 0.5,
@@ -94,7 +79,9 @@ class SceneMain extends Phaser.Scene {
     )
       .setScale(0.1)
       .play("shipanim");
+    // end
 
+    // add main keys
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -102,15 +89,20 @@ class SceneMain extends Phaser.Scene {
     this.keySpace = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+    // end
 
+    // group
     this.enemies = this.add.group();
     this.enemyLasers = this.add.group();
     this.playerLasers = this.add.group();
+    // end
 
+    // release enemies
+    let delayLevel = 200;
     this.time.addEvent({
-      delay: 1000,
+      delay: delayLevel,
       callback: function () {
-        var enemy = null;
+        let enemy = null;
 
         if (Phaser.Math.Between(0, 10) >= 3) {
           enemy = new GunnerShip(
@@ -135,13 +127,14 @@ class SceneMain extends Phaser.Scene {
         }
 
         if (enemy !== null) {
-          enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
+          enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
           this.enemies.add(enemy);
         }
       },
       callbackScope: this,
       loop: true,
     });
+    // end
 
     this.physics.add.collider(this.playerLasers, this.enemies, function (
       playerLaser,
