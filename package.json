@@ -21,14 +21,15 @@
   "dependencies": {
     "css-loader": "^3.6.0",
     "scss-loader": "0.0.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "phaser": "^3.22.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
     "babel-loader": "^8.1.0",
     "live-server": "^1.2.1",
-    "phaser": "^3.23.0",
+    "phaser": "^3.22.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0"
