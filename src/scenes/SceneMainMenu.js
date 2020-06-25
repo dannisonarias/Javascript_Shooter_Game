@@ -8,8 +8,8 @@ class SceneMainMenu extends Phaser.Scene {
 
   preload() {
     this.load.setBaseURL("./assets/");
-    this.load.image("sprBg0", "content/sprBg0.png");
-    this.load.image("sprBg1", "content/sprBg1.png");
+    this.load.image("sprBg0", "layers/image5.jpg");
+    this.load.image("sprBg1", "content/sprBg0.png");
     this.load.image("sprBtnPlay", "content/sprBtnPlay.png");
     this.load.image("sprBtnPlayHover", "content/sprBtnPlayHover.png");
     this.load.image("sprBtnPlayDown", "content/sprBtnPlayDown.png");

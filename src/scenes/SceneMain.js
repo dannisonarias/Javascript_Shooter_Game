@@ -25,15 +25,16 @@ class SceneMain extends Phaser.Scene {
       frameHeight: 16,
     });
     this.load.image("sprLaserEnemy0", "assets/content/sprLaserEnemy0.png");
-    this.load.image("sprLaserPlayer", "assets/content/sprLaserPlayer.png");
-    this.load.spritesheet("sprPlayer", "assets/content/sprPlayer.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-    });
+    this.load.image("sprLaserPlayer", "assets/images/bullet.png");
+    this.load.image("ship1", "assets/images/1.png");
+    this.load.image("ship2", "assets/images/2.png");
+    this.load.image("ship3", "assets/images/3.png");
+    this.load.image("ship4", "assets/images/4.png");
+    this.load.image("ship5", "assets/images/5.png");
 
     this.load.audio("sndExplode0", "assets/content/sndExplode0.wav");
     this.load.audio("sndExplode1", "assets/content/sndExplode1.wav");
-    this.load.audio("sndLaser", "assets/content/sndLaser.wav");
+    this.load.audio("sndLaser", "assets/content/laser5.mp3");
   }
 
   create() {
@@ -55,12 +56,21 @@ class SceneMain extends Phaser.Scene {
       frameRate: 20,
       repeat: 0,
     });
+
+    // animate spaceship
     this.anims.create({
-      key: "sprPlayer",
-      frames: this.anims.generateFrameNumbers("sprPlayer"),
-      frameRate: 20,
+      key: "shipanim",
+      frames: [
+        { key: "ship1" },
+        { key: "ship2" },
+        { key: "ship3" },
+        { key: "ship4" },
+        { key: "ship5", duration: 50 },
+      ],
+      frameRate: 8,
       repeat: -1,
     });
+    // end
 
     this.sfx = {
       explosions: [
@@ -79,10 +89,11 @@ class SceneMain extends Phaser.Scene {
     this.player = new Player(
       this,
       this.game.config.width * 0.5,
-      this.game.config.height * 0.5,
-      "sprPlayer"
-    );
-    console.log(this.player);
+      this.game.config.height * 0.9,
+      "ship1"
+    )
+      .setScale(0.1)
+      .play("shipanim");
 
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
