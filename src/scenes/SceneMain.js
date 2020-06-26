@@ -4,6 +4,9 @@ import Player from "./entityPlayer";
 import CarrierShip from "./entityCarriership";
 import GunnerShip from "./entityGunship";
 import ChaserShip from "./entityChaserShip";
+import Timer from "./timer.js";
+import Leaderboard from "./leaderboard";
+import localScore from "./localScore";
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -16,7 +19,7 @@ class SceneMain extends Phaser.Scene {
       frameHeight: 32,
     });
     this.load.image("sprEnemy0", "assets/content/sprEnemy0.png");
-    this.load.image("sprEnemy1", "assets/content/sprEnemy1.png");
+    this.load.image("sprEnemy1", "assets/content/space_mine.png");
     this.load.image("sprEnemy2", "assets/content/sprEnemy2.png");
 
     this.load.image("sprLaserEnemy0", "assets/content/sprLaserEnemy0.png");
@@ -33,12 +36,14 @@ class SceneMain extends Phaser.Scene {
   }
 
   create() {
+    // Explotion animation
     this.anims.create({
       key: "sprExplosion",
       frames: this.anims.generateFrameNumbers("sprExplosion"),
       frameRate: 20,
       repeat: 0,
     });
+    // end
 
     // animate spaceship
     this.anims.create({
@@ -62,6 +67,7 @@ class SceneMain extends Phaser.Scene {
       ],
       laser: this.sound.add("sndLaser"),
     };
+
     // create scrolling background
     this.backgrounds = [];
     for (var i = 0; i < 5; i++) {
@@ -82,13 +88,16 @@ class SceneMain extends Phaser.Scene {
     // end
 
     // add main keys
-    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.keySpace = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+    const createControlKeys = (() => {
+      this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+      this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+      this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+      this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+      this.keySpace = this.input.keyboard.addKey(
+        Phaser.Input.Keyboard.KeyCodes.SPACE
+      );
+    })();
+
     // end
 
     // group
@@ -97,19 +106,24 @@ class SceneMain extends Phaser.Scene {
     this.playerLasers = this.add.group();
     // end
 
+    localStorage.clear();
+
     // release enemies
-    let delayLevel = 200;
+    Timer.createTimer(this);
+    this.delayLevel = 380;
+
+    // Add Enemies
     this.time.addEvent({
-      delay: delayLevel,
+      delay: this.delayLevel,
       callback: function () {
         let enemy = null;
-
         if (Phaser.Math.Between(0, 10) >= 3) {
           enemy = new GunnerShip(
             this,
             Phaser.Math.Between(0, this.game.config.width),
             0
           );
+          enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
         } else if (Phaser.Math.Between(0, 10) >= 5) {
           if (this.getEnemiesByType("ChaserShip").length < 5) {
             enemy = new ChaserShip(
@@ -117,6 +131,8 @@ class SceneMain extends Phaser.Scene {
               Phaser.Math.Between(0, this.game.config.width),
               0
             );
+            // set enemy scale
+            enemy.setScale(Phaser.Math.Between(10, 20) * 0.025);
           }
         } else {
           enemy = new CarrierShip(
@@ -124,10 +140,10 @@ class SceneMain extends Phaser.Scene {
             Phaser.Math.Between(0, this.game.config.width),
             0
           );
+          enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
         }
 
         if (enemy !== null) {
-          enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
           this.enemies.add(enemy);
         }
       },
@@ -171,7 +187,7 @@ class SceneMain extends Phaser.Scene {
       }
     });
   }
-
+  // Create End
   getEnemiesByType(type) {
     var arr = [];
     for (var i = 0; i < this.enemies.getChildren().length; i++) {
@@ -184,6 +200,16 @@ class SceneMain extends Phaser.Scene {
   }
 
   update() {
+    Timer.updateText(this);
+    // speed up the enemies creation using timer
+    this.time._active[0].delay -= 0.05;
+    // end
+
+    // store score in localStorage
+    if (this.player.getData("isDead")) {
+      localScore.saveScore(this);
+    }
+    //
     if (!this.player.getData("isDead")) {
       this.player.update();
       if (this.keyW.isDown) {
