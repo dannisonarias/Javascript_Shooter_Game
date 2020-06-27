@@ -36,6 +36,9 @@ class SceneMain extends Phaser.Scene {
   }
 
   create() {
+    console.log("get leaderBoard to localStorage");
+    // get leaderBoard to localStorage
+    Leaderboard.allScores();
     // Explotion animation
     this.anims.create({
       key: "sprExplosion",

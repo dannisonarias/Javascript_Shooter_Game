@@ -8,6 +8,9 @@ const localScore = (() => {
     }
   };
   const saveName = (user) => {
+    if (user === "") {
+      user = "No Name";
+    }
     localStorage.setItem("name", user);
   };
   return { saveScore, saveName };

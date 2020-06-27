@@ -19,7 +19,7 @@ const allScores = async () =>
   axios
     .get(`${Base}${K}/scores`, { mode: "cors" })
     .then((result) => {
-      return result;
+      localStorage.scores = JSON.stringify(result.data.result);
     })
     .catch((err) => {
       alert(`Api Error`);

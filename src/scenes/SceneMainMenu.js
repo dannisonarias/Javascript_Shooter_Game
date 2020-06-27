@@ -68,7 +68,11 @@ class SceneMainMenu extends Phaser.Scene {
         // reset and save username to local storage
         localStorage.clear();
         let user = document.getElementById("username").value;
-        localScore.saveName(user);
+        if (user === "") {
+          localScore.saveName("No Name");
+        } else {
+          localScore.saveName(user);
+        }
         // start next Scene
         this.scene.start("SceneMain");
       },

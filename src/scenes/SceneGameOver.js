@@ -9,14 +9,16 @@ class SceneGameOver extends Phaser.Scene {
     // add for loop to create names for top 10 players.
 
     const createLeaderBoard = async () => {
-      await leaderBoard.sendScore();
       this.add.text(this.game.config.width * 0.4, 150, "LEADERBOARD", 24);
       this.add.text(this.game.config.width * 0.25, 170, "RANK", 24);
       this.add.text(this.game.config.width * 0.45, 170, "NAME", 24);
       this.add.text(this.game.config.width * 0.65, 170, "SCORE", 24);
       let rankPosition = 190;
-      let scores = await leaderBoard.allScores();
-      let leaderBoards = scores.data.result.sort((a, b) => b.score - a.score);
+      let scores = JSON.parse(localStorage.scores);
+      let name = localStorage.name;
+      let newScore = localStorage.score;
+      scores.push({ user: name, score: parseInt(newScore, 10) });
+      let leaderBoards = scores.sort((a, b) => b.score - a.score);
       for (let i = 0; i < 10; i += 1) {
         let cscore = leaderBoards[i].score;
         let user = leaderBoards[i].user;
@@ -25,6 +27,7 @@ class SceneGameOver extends Phaser.Scene {
         this.add.text(this.game.config.width * 0.65, rankPosition, cscore, 24);
         rankPosition += 20;
       }
+      leaderBoard.sendScore();
     };
 
     createLeaderBoard();
