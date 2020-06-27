@@ -5,7 +5,6 @@ import CarrierShip from "./entityCarriership";
 import GunnerShip from "./entityGunship";
 import ChaserShip from "./entityChaserShip";
 import Timer from "./timer.js";
-import Leaderboard from "./leaderboard";
 import localScore from "./localScore";
 
 class SceneMain extends Phaser.Scene {
@@ -36,9 +35,6 @@ class SceneMain extends Phaser.Scene {
   }
 
   create() {
-    console.log("get leaderBoard to localStorage");
-    // get leaderBoard to localStorage
-    Leaderboard.allScores();
     // Explotion animation
     this.anims.create({
       key: "sprExplosion",

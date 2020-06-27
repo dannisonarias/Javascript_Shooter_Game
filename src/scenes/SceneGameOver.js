@@ -1,37 +1,10 @@
 import Phaser from "phaser";
 import ScrollingBackground from "./entityScrollingBackground";
-import leaderBoard from "./leaderboard";
 class SceneGameOver extends Phaser.Scene {
   constructor() {
     super({ key: "SceneGameOver" });
   }
   create() {
-    // add for loop to create names for top 10 players.
-
-    const createLeaderBoard = async () => {
-      this.add.text(this.game.config.width * 0.4, 150, "LEADERBOARD", 24);
-      this.add.text(this.game.config.width * 0.25, 170, "RANK", 24);
-      this.add.text(this.game.config.width * 0.45, 170, "NAME", 24);
-      this.add.text(this.game.config.width * 0.65, 170, "SCORE", 24);
-      let rankPosition = 190;
-      let scores = JSON.parse(localStorage.scores);
-      let name = localStorage.name;
-      let newScore = localStorage.score;
-      scores.push({ user: name, score: parseInt(newScore, 10) });
-      let leaderBoards = scores.sort((a, b) => b.score - a.score);
-      for (let i = 0; i < 10; i += 1) {
-        let cscore = leaderBoards[i].score;
-        let user = leaderBoards[i].user;
-        this.add.text(this.game.config.width * 0.28, rankPosition, i + 1, 24);
-        this.add.text(this.game.config.width * 0.45, rankPosition, user, 24);
-        this.add.text(this.game.config.width * 0.65, rankPosition, cscore, 24);
-        rankPosition += 20;
-      }
-      leaderBoard.sendScore();
-    };
-
-    createLeaderBoard();
-
     this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
       fontFamily: "monospace",
       fontSize: 48,

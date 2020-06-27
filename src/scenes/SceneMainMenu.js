@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import ScrollingBackground from "./entityScrollingBackground";
 import localScore from "./localScore";
+import api from "./apiController";
+import createLeaderBoard from "./leaderBoard";
 
 class SceneMainMenu extends Phaser.Scene {
   constructor() {
@@ -16,15 +18,17 @@ class SceneMainMenu extends Phaser.Scene {
     this.load.image("sprBtnPlayDown", "content/play_button_pressed.png");
     this.load.image("sprBtnRestart", "content/exit_buttons.png");
     this.load.image("sprBtnRestartHover", "content/exit_buttons_pressed.png");
+    this.load.image("leaderBoard1", "content/button_leader-board.png");
+    this.load.image("leaderBoard2", "content/button_leader-board2.png");
     this.load.image("sprBtnRestartDown", "content/exit_buttons_pressed.png");
     this.load.audio("sndBtnOver", "content/sndBtnOver.wav");
     this.load.audio("sndBtnDown", "content/sndBtnDown.wav");
   }
 
   create() {
-    // creating slide out effects for name input
+    // get leaderBoard to localStorage
+    api.allScores();
     // end
-
     this.sfx = {
       btnOver: this.sound.add("sndBtnOver"),
       btnDown: this.sound.add("sndBtnDown"),
@@ -36,6 +40,13 @@ class SceneMainMenu extends Phaser.Scene {
       "sprBtnPlay"
     );
 
+    this.btnLeader = this.add.sprite(
+      this.game.config.width * 0.5,
+      this.game.config.height * 0.9,
+      "leaderBoard1"
+    );
+
+    this.btnLeader.setInteractive();
     this.btnPlay.setInteractive();
 
     this.btnPlay.on(
@@ -47,8 +58,21 @@ class SceneMainMenu extends Phaser.Scene {
       this
     );
 
+    this.btnLeader.on(
+      "pointerover",
+      function () {
+        this.btnLeader.setTexture("leaderBoard2"); // set the button texture to sprBtnPlayHover
+        this.sfx.btnOver.play(); // play the button over sound
+      },
+      this
+    );
+
     this.btnPlay.on("pointerout", function () {
       this.setTexture("sprBtnPlay");
+    });
+
+    this.btnLeader.on("pointerout", function () {
+      this.setTexture("leaderBoard1");
     });
 
     this.btnPlay.on(
@@ -75,6 +99,21 @@ class SceneMainMenu extends Phaser.Scene {
         }
         // start next Scene
         this.scene.start("SceneMain");
+      },
+      this
+    );
+    this.btnLeader.on(
+      "pointerdown",
+      function () {
+        this.btnLeader.setTexture("leaderBoard1");
+      },
+      this
+    );
+    this.btnLeader.on(
+      "pointerup",
+      () => {
+        // start next Scene
+        this.scene.start("SceneLeaderBoard");
       },
       this
     );
