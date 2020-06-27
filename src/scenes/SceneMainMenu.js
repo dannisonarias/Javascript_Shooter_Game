@@ -11,6 +11,7 @@ class SceneMainMenu extends Phaser.Scene {
 
   preload() {
     this.load.setBaseURL("./assets/");
+    this.load.image("gameTitle", "content/Title.png");
     this.load.image("sprBg0", "content/sprBg0.png");
     this.load.image("sprBg1", "content/sprBg1.png");
     this.load.image("sprBtnPlay", "content/play_buttons.png");
@@ -91,11 +92,14 @@ class SceneMainMenu extends Phaser.Scene {
 
         // reset and save username to local storage
         localStorage.clear();
-        let user = document.getElementById("username").value;
-        if (user === "") {
+        // hide user input field
+        let user = document.getElementById("username");
+        user.classList.add("hidden");
+        // save input to localstorage
+        if (user.value === "") {
           localScore.saveName("No Name");
         } else {
-          localScore.saveName(user);
+          localScore.saveName(user.value);
         }
         // start next Scene
         this.scene.start("SceneMain");
@@ -113,24 +117,19 @@ class SceneMainMenu extends Phaser.Scene {
       "pointerup",
       () => {
         // start next Scene
+        // hide user input field
+        let user = document.getElementById("username");
+        user.classList.add("hidden");
         this.scene.start("SceneLeaderBoard");
       },
       this
     );
 
-    this.title = this.add.text(
+    this.add.sprite(
       this.game.config.width * 0.5,
-      128,
-      "ALIEN INVASION",
-      {
-        fontFamily: "monospace",
-        fontSize: 48,
-        fontStyle: "bold",
-        color: "#ffffff",
-        align: "center",
-      }
+      this.game.config.height * 0.2,
+      "gameTitle"
     );
-    this.title.setOrigin(0.5);
 
     this.backgrounds = [];
     for (var i = 0; i < 5; i++) {
