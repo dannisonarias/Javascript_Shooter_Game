@@ -5,6 +5,20 @@ class SceneGameOver extends Phaser.Scene {
     super({ key: "SceneGameOver" });
   }
   create() {
+    // display user score
+    this.add.text(
+      this.game.config.width * 0.25,
+      160,
+      `YOUR SCORE:${parseInt(localStorage.score, 10)}`,
+      {
+        fontFamily: "monospace",
+        fontSize: 34,
+        fontStyle: "bold",
+        color: "#ffffff",
+        align: "center",
+      }
+    );
+    // end
     this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
       fontFamily: "monospace",
       fontSize: 48,
