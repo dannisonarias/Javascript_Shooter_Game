@@ -106,8 +106,6 @@ class SceneMain extends Phaser.Scene {
     this.playerLasers = this.add.group();
     // end
 
-    localStorage.clear();
-
     // release enemies
     Timer.createTimer(this);
     this.delayLevel = 380;

@@ -5,6 +5,7 @@ import SceneGameOver from "./scenes/SceneGameOver";
 
 var config = {
   type: Phaser.WEBGL,
+  parent: "game",
   width: 480,
   height: 640,
   backgroundColor: "black",
@@ -14,7 +15,9 @@ var config = {
       gravity: { x: 0, y: 0 },
     },
   },
+
   scene: [SceneMainMenu, SceneMain, SceneGameOver],
+
   pixelArt: true,
   roundPixels: true,
 };

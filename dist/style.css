@@ -1,0 +1,8 @@
+#game {
+  position: relative;
+}
+
+#username {
+  position: absolute;
+  bottom: 0;
+}

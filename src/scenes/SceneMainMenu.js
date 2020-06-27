@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import ScrollingBackground from "./entityScrollingBackground";
+import localScore from "./localScore";
 
 class SceneMainMenu extends Phaser.Scene {
   constructor() {
@@ -21,6 +22,9 @@ class SceneMainMenu extends Phaser.Scene {
   }
 
   create() {
+    // creating slide out effects for name input
+    // end
+
     this.sfx = {
       btnOver: this.sound.add("sndBtnOver"),
       btnDown: this.sound.add("sndBtnDown"),
@@ -60,6 +64,12 @@ class SceneMainMenu extends Phaser.Scene {
       "pointerup",
       function () {
         this.btnPlay.setTexture("sprBtnPlay");
+
+        // reset and save username to local storage
+        localStorage.clear();
+        let user = document.getElementById("username").value;
+        localScore.saveName(user);
+        // start next Scene
         this.scene.start("SceneMain");
       },
       this

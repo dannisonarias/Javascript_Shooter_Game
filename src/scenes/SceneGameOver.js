@@ -6,18 +6,18 @@ class SceneGameOver extends Phaser.Scene {
     super({ key: "SceneGameOver" });
   }
   create() {
-    this.add.text(this.game.config.width * 0.4, 150, "LEADERBOARD", 24);
-    this.add.text(this.game.config.width * 0.25, 170, "RANK", 24);
-    this.add.text(this.game.config.width * 0.45, 170, "NAME", 24);
-    this.add.text(this.game.config.width * 0.65, 170, "SCORE", 24);
+    // add for loop to create names for top 10 players.
 
-    // add for loop to create names for top 5 players.
-    const updateRanks = async () => {
+    const createLeaderBoard = async () => {
+      await leaderBoard.sendScore();
+      this.add.text(this.game.config.width * 0.4, 150, "LEADERBOARD", 24);
+      this.add.text(this.game.config.width * 0.25, 170, "RANK", 24);
+      this.add.text(this.game.config.width * 0.45, 170, "NAME", 24);
+      this.add.text(this.game.config.width * 0.65, 170, "SCORE", 24);
       let rankPosition = 190;
       let scores = await leaderBoard.allScores();
-      let leaderBoards = scores.data.result;
-
-      for (let i = 0; i < leaderBoards.length; i += 1) {
+      let leaderBoards = scores.data.result.sort((a, b) => b.score - a.score);
+      for (let i = 0; i < 10; i += 1) {
         let cscore = leaderBoards[i].score;
         let user = leaderBoards[i].user;
         this.add.text(this.game.config.width * 0.28, rankPosition, i + 1, 24);
@@ -26,7 +26,8 @@ class SceneGameOver extends Phaser.Scene {
         rankPosition += 20;
       }
     };
-    updateRanks();
+
+    createLeaderBoard();
 
     this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
       fontFamily: "monospace",
@@ -76,7 +77,7 @@ class SceneGameOver extends Phaser.Scene {
       "pointerup",
       function () {
         this.btnRestart.setTexture("sprBtnRestart");
-        this.scene.start("SceneMain");
+        this.scene.start("SceneMainMenu");
       },
       this
     );

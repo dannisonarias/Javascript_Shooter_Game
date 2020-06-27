@@ -7,7 +7,10 @@ const localScore = (() => {
       );
     }
   };
-  return { saveScore };
+  const saveName = (user) => {
+    localStorage.setItem("name", user);
+  };
+  return { saveScore, saveName };
 })();
 
 export default localScore;
