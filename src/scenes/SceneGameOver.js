@@ -1,10 +1,15 @@
 import Phaser from "phaser";
 import ScrollingBackground from "./entityScrollingBackground";
+import api from "./apiController";
+
 class SceneGameOver extends Phaser.Scene {
   constructor() {
     super({ key: "SceneGameOver" });
   }
   create() {
+    // send score
+    api.sendScore();
+
     // display user score
     this.add.text(
       this.game.config.width * 0.25,
@@ -19,6 +24,8 @@ class SceneGameOver extends Phaser.Scene {
       }
     );
     // end
+    // reset and save username to local storage
+    localStorage.clear();
     this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
       fontFamily: "monospace",
       fontSize: 48,

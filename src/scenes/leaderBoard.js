@@ -1,7 +1,11 @@
-import api from "./apiController";
-
 const createLeaderBoard = (scene) => {
-  scene.add.text(scene.game.config.width * 0.4, 150, "LEADERBOARD", 24);
+  scene.add.text(scene.game.config.width * 0.25, 120, "LEADERBOARD", {
+    fontFamily: "monospace",
+    fontSize: 35,
+    fontStyle: "bold",
+    color: "#ffffff",
+    align: "center",
+  });
   scene.add.text(scene.game.config.width * 0.25, 170, "RANK", 24);
   scene.add.text(scene.game.config.width * 0.45, 170, "NAME", 24);
   scene.add.text(scene.game.config.width * 0.65, 170, "SCORE", 24);
@@ -19,7 +23,6 @@ const createLeaderBoard = (scene) => {
     scene.add.text(scene.game.config.width * 0.65, rankPosition, cscore, 24);
     rankPosition += 20;
   }
-  api.sendScore();
 };
 
 export default createLeaderBoard;
