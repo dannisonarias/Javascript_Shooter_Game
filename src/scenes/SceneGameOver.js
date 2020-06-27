@@ -9,7 +9,6 @@ class SceneGameOver extends Phaser.Scene {
   create() {
     // send score
     api.sendScore();
-
     // display user score
     this.add.text(
       this.game.config.width * 0.25,

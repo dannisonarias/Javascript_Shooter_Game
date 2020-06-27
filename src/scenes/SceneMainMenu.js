@@ -12,6 +12,7 @@ class SceneMainMenu extends Phaser.Scene {
   preload() {
     this.load.setBaseURL("./assets/");
     this.load.image("gameTitle", "content/Title.png");
+    this.load.image("alien", "content/alien_94.png");
     this.load.image("sprBg0", "content/sprBg0.png");
     this.load.image("sprBg1", "content/sprBg1.png");
     this.load.image("sprBtnPlay", "content/play_buttons.png");
@@ -40,6 +41,14 @@ class SceneMainMenu extends Phaser.Scene {
       this.game.config.height * 0.5,
       "sprBtnPlay"
     );
+
+    this.alien = this.add
+      .sprite(
+        this.game.config.width * 0.55,
+        this.game.config.height * 0.94,
+        "alien"
+      )
+      .setScale(0.8);
 
     this.btnLeader = this.add.sprite(
       this.game.config.width * 0.5,
