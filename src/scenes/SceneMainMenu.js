@@ -25,6 +25,7 @@ class SceneMainMenu extends Phaser.Scene {
     this.load.image("sprBtnRestartDown", "content/exit_buttons_pressed.png");
     this.load.audio("sndBtnOver", "content/sndBtnOver.wav");
     this.load.audio("sndBtnDown", "content/sndBtnDown.wav");
+    this.load.audio("spaceMenu", "sounds/spaceMenu.mp3");
   }
 
   create() {
@@ -35,6 +36,8 @@ class SceneMainMenu extends Phaser.Scene {
       btnOver: this.sound.add("sndBtnOver"),
       btnDown: this.sound.add("sndBtnDown"),
     };
+
+    this.sound.play("spaceMenu");
 
     this.btnPlay = this.add.sprite(
       this.game.config.width * 0.5,
@@ -98,7 +101,6 @@ class SceneMainMenu extends Phaser.Scene {
       "pointerup",
       function () {
         this.btnPlay.setTexture("sprBtnPlay");
-
         // reset and save username to local storage
         localStorage.clear();
         // hide user input field
@@ -115,6 +117,7 @@ class SceneMainMenu extends Phaser.Scene {
       },
       this
     );
+
     this.btnLeader.on(
       "pointerdown",
       function () {
@@ -122,6 +125,7 @@ class SceneMainMenu extends Phaser.Scene {
       },
       this
     );
+
     this.btnLeader.on(
       "pointerup",
       () => {
@@ -140,19 +144,23 @@ class SceneMainMenu extends Phaser.Scene {
       "gameTitle"
     );
 
-    this.backgrounds = [];
-    for (var i = 0; i < 5; i++) {
-      var keys = ["sprBg0", "sprBg1"];
-      var key = keys[Phaser.Math.Between(0, keys.length - 1)];
-      var bg = new ScrollingBackground(this, key, i * 10);
-      this.backgrounds.push(bg);
-    }
+    const createScrollBg = (() => {
+      this.backgrounds = [];
+      for (let i = 0; i < 5; i++) {
+        let keys = ["sprBg0", "sprBg1"];
+        let key = keys[Phaser.Math.Between(0, keys.length - 1)];
+        let bg = new ScrollingBackground(this, key, i * 10);
+        this.backgrounds.push(bg);
+      }
+    })();
   }
 
   update() {
-    for (var i = 0; i < this.backgrounds.length; i++) {
-      this.backgrounds[i].update();
-    }
+    const backgrounds = (() => {
+      for (let i = 0; i < this.backgrounds.length; i++) {
+        this.backgrounds[i].update();
+      }
+    })();
   }
 }
 

@@ -4,7 +4,7 @@ import SceneMain from "./scenes/SceneMain";
 import SceneGameOver from "./scenes/SceneGameOver";
 import SceneLeaderBoard from "./scenes/SceneLeaderBoard";
 
-var config = {
+let config = {
   type: Phaser.WEBGL,
   parent: "game",
   width: 480,
@@ -23,4 +23,4 @@ var config = {
   roundPixels: true,
 };
 
-var game = new Phaser.Game(config);
+let game = new Phaser.Game(config);

@@ -1,11 +1,12 @@
 import "phaser";
 import ScrollingBackground from "./entityScrollingBackground";
 import Player from "./entityPlayer";
-import CarrierShip from "./entityCarriership";
-import GunnerShip from "./entityGunship";
-import ChaserShip from "./entityChaserShip";
+// import CarrierShip from "./entityCarriership";
+// import GunnerShip from "./entityGunship";
+// import ChaserShip from "./entityChaserShip";
 import Timer from "./timer.js";
 import localScore from "./localScore";
+import enemyType from "./enemyType";
 
 class SceneMain extends Phaser.Scene {
   constructor() {
@@ -36,57 +37,58 @@ class SceneMain extends Phaser.Scene {
 
   create() {
     // Explotion animation
-    this.anims.create({
-      key: "sprExplosion",
-      frames: this.anims.generateFrameNumbers("sprExplosion"),
-      frameRate: 20,
-      repeat: 0,
-    });
-    // end
+    const addExplotionAnim = (() => {
+      this.anims.create({
+        key: "sprExplosion",
+        frames: this.anims.generateFrameNumbers("sprExplosion"),
+        frameRate: 20,
+        repeat: 0,
+      });
+    })();
+    const addExplosionSounds = (() => {
+      this.sfx = {
+        explosions: [
+          this.sound.add("sndExplode0"),
+          this.sound.add("sndExplode1"),
+        ],
+        laser: this.sound.add("sndLaser"),
+      };
+    })();
 
-    // animate spaceship
-    this.anims.create({
-      key: "shipanim",
-      frames: [
-        { key: "ship1" },
-        { key: "ship2" },
-        { key: "ship3" },
-        { key: "ship4" },
-        { key: "ship5", duration: 50 },
-      ],
-      frameRate: 8,
-      repeat: -1,
-    });
-    // end
+    const animateSpaceship = (() => {
+      this.anims.create({
+        key: "shipanim",
+        frames: [
+          { key: "ship1" },
+          { key: "ship2" },
+          { key: "ship3" },
+          { key: "ship4" },
+          { key: "ship5", duration: 50 },
+        ],
+        frameRate: 8,
+        repeat: -1,
+      });
+    })();
 
-    this.sfx = {
-      explosions: [
-        this.sound.add("sndExplode0"),
-        this.sound.add("sndExplode1"),
-      ],
-      laser: this.sound.add("sndLaser"),
-    };
+    const createParallaxBg = (() => {
+      this.backgrounds = [];
+      for (var i = 0; i < 5; i++) {
+        var bg = new ScrollingBackground(this, "sprBg0", i * 10);
+        this.backgrounds.push(bg);
+      }
+    })();
 
-    // create scrolling background
-    this.backgrounds = [];
-    for (var i = 0; i < 5; i++) {
-      var bg = new ScrollingBackground(this, "sprBg0", i * 10);
-      this.backgrounds.push(bg);
-    }
-    // end
+    const createPlayer = (() => {
+      this.player = new Player(
+        this,
+        this.game.config.width * 0.5,
+        this.game.config.height * 0.9,
+        "ship1"
+      )
+        .setScale(0.1)
+        .play("shipanim");
+    })();
 
-    // create player sprite
-    this.player = new Player(
-      this,
-      this.game.config.width * 0.5,
-      this.game.config.height * 0.9,
-      "ship1"
-    )
-      .setScale(0.1)
-      .play("shipanim");
-    // end
-
-    // add main keys
     const createControlKeys = (() => {
       this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
       this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -97,98 +99,71 @@ class SceneMain extends Phaser.Scene {
       );
     })();
 
-    // end
+    const createGroups = (() => {
+      this.enemies = this.add.group();
+      this.enemyLasers = this.add.group();
+      this.playerLasers = this.add.group();
+    })();
 
-    // group
-    this.enemies = this.add.group();
-    this.enemyLasers = this.add.group();
-    this.playerLasers = this.add.group();
-    // end
-
-    // release enemies
+    // create game Timer
     Timer.createTimer(this);
     this.delayLevel = 380;
-
-    // Add Enemies
-    this.time.addEvent({
-      delay: this.delayLevel,
-      callback: function () {
-        let enemy = null;
-        if (Phaser.Math.Between(0, 10) >= 3) {
-          enemy = new GunnerShip(
-            this,
-            Phaser.Math.Between(0, this.game.config.width),
-            0
-          );
-          enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
-        } else if (Phaser.Math.Between(0, 10) >= 5) {
-          if (this.getEnemiesByType("ChaserShip").length < 5) {
-            enemy = new ChaserShip(
-              this,
-              Phaser.Math.Between(0, this.game.config.width),
-              0
-            );
-            // set enemy scale
-            enemy.setScale(Phaser.Math.Between(10, 20) * 0.025);
+    // release enemies
+    const releaseEnemies = (() => {
+      this.time.addEvent({
+        delay: this.delayLevel,
+        callback: () => {
+          let enemy = null;
+          if (Phaser.Math.Between(0, 10) >= 3) {
+            enemy = enemyType.gunner(this);
+          } else if (Phaser.Math.Between(0, 10) >= 5) {
+            if (this.getEnemiesByType("ChaserShip").length < 5) {
+              enemy = enemyType.chaser(this);
+            }
+          } else {
+            enemy = enemyType.carrier(this);
           }
-        } else {
-          enemy = new CarrierShip(
-            this,
-            Phaser.Math.Between(0, this.game.config.width),
-            0
-          );
-          enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
+
+          if (enemy !== null) {
+            this.enemies.add(enemy);
+          }
+        },
+        callbackScope: this,
+        loop: true,
+      });
+    })();
+
+    const laserDestroyEnemy = (() => {
+      this.physics.add.collider(
+        this.playerLasers,
+        this.enemies,
+        (playerLaser, enemy) => {
+          if (enemy) {
+            if (enemy.onDestroy !== undefined) {
+              enemy.onDestroy();
+            }
+            enemy.explode(true);
+            playerLaser.destroy();
+          }
         }
+      );
+    })();
 
-        if (enemy !== null) {
-          this.enemies.add(enemy);
+    const playerCrash = (() => {
+      this.physics.add.overlap(this.player, this.enemies, (player, enemy) => {
+        if (!player.getData("isDead") && !enemy.getData("isDead")) {
+          player.explode(false);
+          player.onDestroy();
+          enemy.explode(true);
         }
-      },
-      callbackScope: this,
-      loop: true,
-    });
-    // end
-
-    this.physics.add.collider(this.playerLasers, this.enemies, function (
-      playerLaser,
-      enemy
-    ) {
-      if (enemy) {
-        if (enemy.onDestroy !== undefined) {
-          enemy.onDestroy();
-        }
-        enemy.explode(true);
-        playerLaser.destroy();
-      }
-    });
-
-    this.physics.add.overlap(this.player, this.enemies, function (
-      player,
-      enemy
-    ) {
-      if (!player.getData("isDead") && !enemy.getData("isDead")) {
-        player.explode(false);
-        player.onDestroy();
-        enemy.explode(true);
-      }
-    });
-
-    this.physics.add.overlap(this.player, this.enemyLasers, function (
-      player,
-      laser
-    ) {
-      if (!player.getData("isDead") && !laser.getData("isDead")) {
-        player.explode(false);
-        player.onDestroy();
-        laser.destroy();
-      }
-    });
+      });
+    })();
   }
   // Create End
   getEnemiesByType(type) {
-    var arr = [];
-    for (var i = 0; i < this.enemies.getChildren().length; i++) {
-      var enemy = this.enemies.getChildren()[i];
+    let arr = [];
+    for (let i = 0; i < this.enemies.getChildren().length; i++) {
+      let enemy = this.enemies.getChildren()[i];
       if (enemy.getData("type") == type) {
         arr.push(enemy);
       }
