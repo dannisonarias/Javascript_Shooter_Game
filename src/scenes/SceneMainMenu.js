@@ -25,7 +25,6 @@ class SceneMainMenu extends Phaser.Scene {
     this.load.image("sprBtnRestartDown", "content/exit_buttons_pressed.png");
     this.load.audio("sndBtnOver", "content/sndBtnOver.wav");
     this.load.audio("sndBtnDown", "content/sndBtnDown.wav");
-    this.load.audio("spaceMenu", "sounds/spaceMenu.mp3");
   }
 
   create() {
@@ -36,8 +35,6 @@ class SceneMainMenu extends Phaser.Scene {
       btnOver: this.sound.add("sndBtnOver"),
       btnDown: this.sound.add("sndBtnDown"),
     };
-
-    this.sound.play("spaceMenu");
 
     this.btnPlay = this.add.sprite(
       this.game.config.width * 0.5,
