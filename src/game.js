@@ -24,4 +24,3 @@ const config = {
 };
 // eslint-disable-next-line
 const game = new Phaser.Game(config);
-debugger;
