@@ -3,6 +3,14 @@
 This is a 2D game built with phaser 3. The objective is to stay alive as long as possible and hope to get into the leader boards!
 The game increases in difficulty every second that passes.
 
+# Game Video Sample
+
+![Alt Text](./captured.gif)
+
+# Live Link
+
+[Live Game](https://condescending-lalande-ec48dd.netlify.app/)
+
 ## Game Design Process
 
 I was given five days as the deadline for this game, Here's what those days looked like.
