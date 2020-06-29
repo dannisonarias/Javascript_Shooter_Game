@@ -1,7 +1,7 @@
-import CarrierShip from "./entityCarriership";
-import GunnerShip from "./entityGunship";
-import ChaserShip from "./entityChaserShip";
-import "phaser";
+import Phaser from 'phaser';
+import CarrierShip from './entityCarriership';
+import GunnerShip from './entityGunship';
+import ChaserShip from './entityChaserShip';
 
 const releaseEnemy = (() => {
   let enemy;
@@ -9,7 +9,7 @@ const releaseEnemy = (() => {
     enemy = new GunnerShip(
       scene,
       Phaser.Math.Between(0, scene.game.config.width),
-      0
+      0,
     );
     enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
     return enemy;
@@ -18,7 +18,7 @@ const releaseEnemy = (() => {
     enemy = new ChaserShip(
       scene,
       Phaser.Math.Between(0, scene.game.config.width),
-      0
+      0,
     );
     // set enemy scale
     enemy.setScale(Phaser.Math.Between(10, 20) * 0.025);
@@ -28,7 +28,7 @@ const releaseEnemy = (() => {
     enemy = new CarrierShip(
       scene,
       Phaser.Math.Between(0, scene.game.config.width),
-      0
+      0,
     );
     enemy.setScale(Phaser.Math.Between(10, 20) * 0.005);
     return enemy;

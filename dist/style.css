@@ -29,9 +29,9 @@
 #username::placeholder {
   color: rgb(255, 255, 255);
   text-align: center;
-
   font-size: 25px;
 }
+
 input[type="text"] {
   text-align: center;
   font-size: 25px;

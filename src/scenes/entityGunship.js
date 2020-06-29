@@ -1,9 +1,9 @@
-import Entity from "./Entities";
-import EnemyLaser from "./entityEnemyLaser";
+import Phaser from 'phaser';
+import Entity from './Entities';
 
 class GunnerShip extends Entity {
   constructor(scene, x, y) {
-    super(scene, x, y, "sprEnemy0", "GunShip");
+    super(scene, x, y, 'sprEnemy0', 'GunShip');
 
     this.body.velocity.y = Phaser.Math.Between(200, 450);
   }

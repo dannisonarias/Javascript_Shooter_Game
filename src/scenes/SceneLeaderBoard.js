@@ -1,75 +1,81 @@
-import createLeaderBoard from "./leaderBoard";
-import "phaser";
-import ScrollingBackground from "./entityScrollingBackground";
+import Phaser from 'phaser';
+import createLeaderBoard from './leaderBoard';
+import ScrollingBackground from './entityScrollingBackground';
+
 class SceneLeaderBoard extends Phaser.Scene {
   constructor() {
-    super({ key: "SceneLeaderBoard" });
+    super({ key: 'SceneLeaderBoard' });
   }
+
   preload() {
-    this.load.image("sprBtnRestart", "content/exit_buttons.png");
-    this.load.image("sprBtnRestartHover", "content/exit_buttons_pressed.png");
-    this.load.image("sprBtnRestartDown", "content/exit_buttons_pressed.png");
-    this.load.audio("sndBtnOver", "content/sndBtnOver.wav");
-    this.load.audio("sndBtnDown", "content/sndBtnDown.wav");
+    this.load.image('sprBtnRestart', 'content/exit_buttons.png');
+    this.load.image('sprBtnRestartHover', 'content/exit_buttons_pressed.png');
+    this.load.image('sprBtnRestartDown', 'content/exit_buttons_pressed.png');
+    this.load.audio('sndBtnOver', 'content/sndBtnOver.wav');
+    this.load.audio('sndBtnDown', 'content/sndBtnDown.wav');
   }
+
   create() {
     createLeaderBoard(this);
     this.sfx = {
-      btnOver: this.sound.add("sndBtnOver"),
-      btnDown: this.sound.add("sndBtnDown"),
+      btnOver: this.sound.add('sndBtnOver'),
+      btnDown: this.sound.add('sndBtnDown'),
     };
 
     this.btnRestart = this.add.sprite(
       this.game.config.width * 0.5,
       this.game.config.height * 0.8,
-      "sprBtnRestart"
+      'sprBtnRestart',
     );
 
     this.btnRestart.setInteractive();
 
     this.btnRestart.on(
-      "pointerover",
+      'pointerover',
+      // eslint-disable-next-line
       function () {
-        this.btnRestart.setTexture("sprBtnRestartHover"); // set the button texture to sprBtnPlayHover
+        this.btnRestart.setTexture('sprBtnRestartHover'); // set the button texture to sprBtnPlayHover
         this.sfx.btnOver.play(); // play the button over sound
       },
-      this
+      this,
     );
-
+    // eslint-disable-next-line
     this.btnRestart.on("pointerout", function () {
-      this.setTexture("sprBtnRestart");
+      this.setTexture('sprBtnRestart');
     });
 
     this.btnRestart.on(
-      "pointerdown",
+      'pointerdown',
+      // eslint-disable-next-line
       function () {
-        this.btnRestart.setTexture("sprBtnRestartDown");
+        this.btnRestart.setTexture('sprBtnRestartDown');
         this.sfx.btnDown.play();
       },
-      this
+      this,
     );
 
     this.btnRestart.on(
-      "pointerup",
+      'pointerup',
+      // eslint-disable-next-line
       function () {
-        this.btnRestart.setTexture("sprBtnRestart");
-        let user = document.getElementById("username");
-        user.classList.remove("hidden");
-        this.scene.start("SceneMainMenu");
+        this.btnRestart.setTexture('sprBtnRestart');
+        const user = document.getElementById('username');
+        user.classList.remove('hidden');
+        this.scene.start('SceneMainMenu');
       },
-      this
+      this,
     );
     this.backgrounds = [];
-    for (var i = 0; i < 5; i++) {
-      var keys = ["sprBg0", "sprBg1"];
-      var key = keys[Phaser.Math.Between(0, keys.length - 1)];
-      var bg = new ScrollingBackground(this, key, i * 10);
+    for (let i = 0; i < 5; i += 1) {
+      const keys = ['sprBg0', 'sprBg1'];
+      const key = keys[Phaser.Math.Between(0, keys.length - 1)];
+      const bg = new ScrollingBackground(this, key, i * 10);
       this.backgrounds.push(bg);
     }
   }
 
   update() {
-    for (var i = 0; i < this.backgrounds.length; i++) {
+    for (let i = 0; i < this.backgrounds.length; i += 1) {
       this.backgrounds[i].update();
     }
   }

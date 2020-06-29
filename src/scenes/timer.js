@@ -1,19 +1,20 @@
 const timer = (() => {
   const createTimer = (scene) => {
-    scene.timeText = scene.add.text(15, 15, "", {
-      fontFamily: "monospace",
+    scene.timeText = scene.add.text(15, 15, '', {
+      fontFamily: 'monospace',
       fontSize: 18,
-      fontStyle: "bold",
-      color: "#ffffff",
-      align: "center",
+      fontStyle: 'bold',
+      color: '#ffffff',
+      align: 'center',
     });
   };
 
   const updateText = (scene) => {
     scene.timeText.setText(
       `Your Score: ${Math.round(
+        // eslint-disable-next-line
         scene.delayLevel - scene.time._active[0].delay
-      )}`
+      )}`,
     );
   };
 
