@@ -4,12 +4,29 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "test": "jest",
     "build": "webpack",
     "start": "webpack --watch & live-server --port=8085"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dannisonarias/Javascript_Shooter_Game.git"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/mocks/fileMock.js"
+    }
   },
   "keywords": [],
   "author": "",
@@ -26,6 +43,7 @@
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "babel-jest": "^26.1.0",
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
     "babel-loader": "^8.1.0",
@@ -39,6 +57,8 @@
     "stylelint-scss": "^3.17.2",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "jest": "^25.1.0",
+    "jest-canvas-mock": "^2.2.0"
   }
 }
