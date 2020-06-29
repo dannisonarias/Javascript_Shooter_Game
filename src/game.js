@@ -1,17 +1,17 @@
-import Phaser from "phaser";
-import SceneMainMenu from "./scenes/SceneMainMenu";
-import SceneMain from "./scenes/SceneMain";
-import SceneGameOver from "./scenes/SceneGameOver";
-import SceneLeaderBoard from "./scenes/SceneLeaderBoard";
+import Phaser from 'phaser';
+import SceneMainMenu from './scenes/SceneMainMenu';
+import SceneMain from './scenes/SceneMain';
+import SceneGameOver from './scenes/SceneGameOver';
+import SceneLeaderBoard from './scenes/SceneLeaderBoard';
 
 const config = {
   type: Phaser.WEBGL,
-  parent: "game",
+  parent: 'game',
   width: 480,
   height: 640,
-  backgroundColor: "black",
+  backgroundColor: 'black',
   physics: {
-    default: "arcade",
+    default: 'arcade',
     arcade: {
       gravity: { x: 0, y: 0 },
     },
