@@ -2,6 +2,7 @@
 
 This is a 2D game built with phaser 3. The objective is to stay alive as long as possible and hope to get into the leader boards!
 The game increases in difficulty every second that passes.
+Objective of the game is to stay alive as long as possible and try and make it to the leader board!
 
 # Game Video Sample
 
