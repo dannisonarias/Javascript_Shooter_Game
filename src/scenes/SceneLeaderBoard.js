@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import createLeaderBoard from './leaderBoard';
 import ScrollingBackground from './entityScrollingBackground';
+import display from './domController';
 
 class SceneLeaderBoard extends Phaser.Scene {
   constructor() {
@@ -58,6 +59,7 @@ class SceneLeaderBoard extends Phaser.Scene {
       'pointerup',
       // eslint-disable-next-line
       function () {
+        display.onControl();
         this.btnRestart.setTexture('sprBtnRestart');
         const user = document.getElementById('username');
         user.classList.remove('hidden');

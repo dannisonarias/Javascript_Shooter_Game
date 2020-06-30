@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
     <title>Game</title>
     <script src="./main.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
     <div id="game">
+      <div id="instructions" class="hidden">
+        <i class="fa fa-window-close fa-2x closeButton" aria-hidden="true"></i>
+        <img src="./assets/images/gameInstructions.png" alt="" />
+      </div>
+      <div class="gameControls">
+        <img src="./assets/images/button_game-controls.png" alt="" />
+      </div>
       <div class="inputwrap">
         <input type="text" id="username" value="" placeholder="Enter Name" />
       </div>

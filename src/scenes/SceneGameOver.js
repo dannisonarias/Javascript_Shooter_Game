@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import ScrollingBackground from './entityScrollingBackground';
 import api from './apiController';
+import display from './domController';
 
 class SceneGameOver extends Phaser.Scene {
   constructor() {
@@ -76,6 +77,7 @@ class SceneGameOver extends Phaser.Scene {
       'pointerup',
       // eslint-disable-next-line
       function () {
+        display.onControl();
         this.btnRestart.setTexture('sprBtnRestart');
         const user = document.getElementById('username');
         user.classList.remove('hidden');

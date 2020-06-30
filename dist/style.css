@@ -36,3 +36,25 @@ input[type="text"] {
   text-align: center;
   font-size: 25px;
 }
+
+#instructions {
+  position: absolute;
+  left: 30px;
+  top: 280px;
+}
+
+.closeButton {
+  position: absolute;
+  right: 2px;
+  top: 5px;
+}
+
+.closeButton:hover {
+  color: rgb(148, 26, 26);
+}
+
+.gameControls {
+  position: absolute;
+  left: 96px;
+  top: 370px;
+}

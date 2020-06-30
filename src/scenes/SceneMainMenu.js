@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import ScrollingBackground from './entityScrollingBackground';
 import localScore from './localScore';
 import api from './apiController';
+import display from './domController';
 
 class SceneMainMenu extends Phaser.Scene {
   constructor() {
@@ -27,6 +28,9 @@ class SceneMainMenu extends Phaser.Scene {
   }
 
   create() {
+    // Controller instructions
+    display.displayControls();
+    // end
     // get leaderBoard to localStorage
     api.allScores();
     // end
@@ -106,6 +110,8 @@ class SceneMainMenu extends Phaser.Scene {
         // hide user input field
         const user = document.getElementById('username');
         user.classList.add('hidden');
+        // hide control settings
+        display.offControl();
         // save input to localstorage
         if (user.value === '') {
           localScore.saveName('No Name');
@@ -132,6 +138,7 @@ class SceneMainMenu extends Phaser.Scene {
       () => {
         // start next Scene
         // hide user input field
+        display.offControl();
         const user = document.getElementById('username');
         user.classList.add('hidden');
         this.scene.start('SceneLeaderBoard');
