@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-const Base = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
-const K = 'uesnsdlVyVnHX40MipeX';
+const Base =
+  "https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/";
+const K = "uesnsdlVyVnHX40MipeX";
 
 const sendScore = () => {
   const { name } = localStorage;
@@ -13,18 +14,19 @@ const sendScore = () => {
     })
     .catch((err) => {
       // eslint-disable-next-line
-      console.exception(err);
+      console.error(err);
     });
 };
 
-const allScores = async () => axios
-  .get(`${Base}${K}/scores`, { mode: 'cors' })
-  .then((result) => {
-    localStorage.scores = JSON.stringify(result.data.result);
-  })
-  .catch((err) => {
-    // eslint-disable-next-line
-      console.exception(err);
-  });
+const allScores = () =>
+  axios
+    .get(`${Base}${K}/scores`, { mode: "cors" })
+    .then((result) => {
+      localStorage.scores = JSON.stringify(result.data.result);
+    })
+    .catch((err) => {
+      // eslint-disable-next-line
+      console.error(err);
+    });
 
 export default { sendScore, allScores };
