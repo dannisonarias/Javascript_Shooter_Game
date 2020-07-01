@@ -2,7 +2,18 @@
 
 This is a 2D game built with phaser 3. The objective is to stay alive as long as possible and hope to get into the leader boards!
 The game increases in difficulty every second that passes.
-Objective of the game is to stay alive as long as possible and try and make it to the leader board!
+
+# Game instructions
+
+click play and stay alive as long as possible by dodging all the aliens
+
+# Game controls
+
+- W- Move up
+- S- Move Down
+- A- Move Left
+- D- Move Right
+- Spacebar- Shoot Lasers
 
 # Game Video Sample
 
