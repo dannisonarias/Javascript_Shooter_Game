@@ -1,0 +1,64 @@
+{
+  "name": "Javascript_Shooter_Game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "start": "webpack --watch & live-server --port=8085"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannisonarias/Javascript_Shooter_Game.git"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/mocks/fileMock.js"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannisonarias/Javascript_Shooter_Game/issues"
+  },
+  "homepage": "https://github.com/dannisonarias/Javascript_Shooter_Game#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "css-loader": "^3.6.0",
+    "phaser": "^3.22.0",
+    "scss-loader": "0.0.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {
+    "babel-jest": "^26.1.0",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "live-server": "^1.2.1",
+    "phaser": "^3.22.0",
+    "stylelint": "^13.3.3",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.17.2",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "jest": "^25.1.0",
+    "jest-canvas-mock": "^2.2.0"
+  }
+}

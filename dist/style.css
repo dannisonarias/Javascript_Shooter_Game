@@ -1,0 +1,60 @@
+#game {
+  width: 600px;
+  height: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.inputwrap {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid rgb(255, 255, 255);
+  position: absolute;
+  left: 135px;
+  top: 200px;
+}
+
+#username {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  width: 200px;
+  height: 50px;
+}
+
+.hidden {
+  display: none;
+}
+
+#username::placeholder {
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 25px;
+}
+
+input[type="text"] {
+  text-align: center;
+  font-size: 25px;
+}
+
+#instructions {
+  position: absolute;
+  left: 30px;
+  top: 280px;
+}
+
+.closeButton {
+  position: absolute;
+  right: 2px;
+  top: 5px;
+}
+
+.closeButton:hover {
+  color: rgb(148, 26, 26);
+}
+
+.gameControls {
+  position: absolute;
+  left: 96px;
+  top: 370px;
+}
